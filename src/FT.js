@@ -7,8 +7,8 @@ export const generateToken = () => {
   const magicNumber1 = randomNumberBetweenThem(5, 9);
   const magicNumber2 = timeStamp.length - magicNumber1;
   const splitedToken = [
-    timeStamp.substring(0, magicNumber1),
-    timeStamp.substring(magicNumber1),
+    timeStamp.slice(0, magicNumber1),
+    timeStamp.slice(magicNumber1),
   ];
   const token =
     randomNumber1 +
@@ -25,14 +25,18 @@ export const validateToken = (token) => {
   var magicNumber1 = +token[token.length - 2];
   var magicNumber2 = +token[token.length - 1];
   var splitedToken = [
-    token.substring(0, 7),
-    token.substring(7, magicNumber1),
-    token.substring(magicNumber1 + 7, 8),
-    token.substring(magicNumber1 + 7 + 8, magicNumber2),
+    token.slice(0, 7),
+    token.slice(7, 7 + magicNumber1),
+    token.slice(7 + magicNumber1, 7 + magicNumber1 + 8),
+    token.slice(7 + magicNumber1 + 8, 7 + magicNumber1 + 8 + magicNumber2),
   ];
 
   var timeStampByToken = +(splitedToken[1] + splitedToken[3]);
-  // console.log(token, timeStampByToken - timeStamp > -10 && timeStampByToken - timeStamp < 100);
+  console.log(
+    token,
+    timeStampByToken - timeStamp,
+    timeStampByToken - timeStamp > -10 && timeStampByToken - timeStamp < 100
+  );
 };
 
 export default { validateToken, generateToken };
