@@ -12,7 +12,6 @@ const plugins = [
   babel({ extensions, babelHelpers: "bundled" }),
   // commonjs(),
 //   terser(),
-
 ];
 
 export default [
@@ -28,9 +27,9 @@ export default [
         file: "dist/FT.esm.js",
         format: "es",
         sourcemap: true,
-      }
+      },
     ],
     plugins,
-    external: ['react'],
+    external: ["react"],
   },
 ];
