@@ -20,20 +20,19 @@ export const generateToken = () => {
   return token;
 };
 
-export const validateToken = (tk) => {
-  setTimeout(() => {
-    const our_tk = new Date().getTime();
-    const mgn1 = +tk[tk.length - 2];
-    const mgn2 = +tk[tk.length - 1];
-    const splt_tk = [
-      tk.substr(0, 7),
-      tk.substr(7, mgn1),
-      tk.substr(mgn1 + 7, 8),
-      tk.substr(mgn1 + 7 + 8, mgn2),
-    ];
-    const dcr_tk = +(splt_tk[1] + splt_tk[3]);
-    console.log(tk, dcr_tk - our_tk > -10 && dcr_tk - our_tk < 100);
-  }, 2);
+export const validateToken = (token) => {
+  var timeStamp = new Date().getTime();
+  var magicNumber1 = +token[token.length - 2];
+  var magicNumber2 = +token[token.length - 1];
+  var splitedToken = [
+    token.substring(0, 7),
+    token.substring(7, magicNumber1),
+    token.substring(magicNumber1 + 7, 8),
+    token.substring(magicNumber1 + 7 + 8, magicNumber2),
+  ];
+
+  var timeStampByToken = +(splitedToken[1] + splitedToken[3]);
+  // console.log(token, timeStampByToken - timeStamp > -10 && timeStampByToken - timeStamp < 100);
 };
 
 export default { validateToken, generateToken };
