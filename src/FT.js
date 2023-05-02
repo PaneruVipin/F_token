@@ -1,4 +1,6 @@
 import {
+  dynamicNumberWithCode,
+  isMagicNumberCodeSameCatagry,
   passwordToCodeHelper,
   randomNumberBetweenThem,
   randomNumberByLength,
@@ -8,14 +10,20 @@ export const generateToken = (password) => {
   if (typeof password != "number") {
     throw Error("only number allowed password");
   }
-  if (JSON.stringify(password).length != 4) {
-    throw Error("password should be 4 length");
+  if (JSON.stringify(password).length < 9) {
+    throw Error("password should be 9 length");
+  }
+  if (JSON.stringify(password).length > 12) {
+    throw Error("password should be less then and equal 12 numbers");
   }
   if (JSON.stringify(password).includes("0")) {
     throw Error("0 is not allowed in password for secruity reason");
   }
 
-  const timeStamp = new Date().getTime().toString();
+  const timeStamp = JSON.stringify(
+    JSON.parse(JSON.stringify(password).slice(4) + "99999") +
+      new Date().getTime()
+  );
   const {
     randomNumber1Length,
     randomNumber2Length,
@@ -31,18 +39,21 @@ export const generateToken = (password) => {
     timeStamp.slice(0, magicNumber1),
     timeStamp.slice(magicNumber1),
   ];
+  const { code, number } = dynamicNumberWithCode();
   const token =
     JSON.stringify(randomNumber3) +
     magicNumberCode +
     JSON.stringify(randomNumber1) +
-    splitedToken[0] +
+    JSON.parse(splitedToken[0]) +
     JSON.stringify(randomNumber2) +
     splitedToken[1];
   return token;
 };
 
 export const validateToken = (token, password) => {
-  const timeStamp = new Date().getTime();
+  const timeStamp =
+    JSON.parse(JSON.stringify(password).slice(4) + "99999") +
+    new Date().getTime();
   const {
     randomNumber1Length,
     randomNumber2Length,
@@ -51,12 +62,13 @@ export const validateToken = (token, password) => {
     magicNumber2,
     magicNumberCode,
   } = passwordToCodeHelper(JSON.stringify(password), JSON.stringify(timeStamp));
-  let tokenWithoutSalt = token.slice(randomNumber3Length + 3);
+  let tokenWithoutSalt = token.slice(randomNumber3Length + 1);
   const magicNumberCodeInToken = token.slice(
     randomNumber3Length,
-    randomNumber3Length + 3
+    randomNumber3Length + 1
   );
-  if (magicNumberCodeInToken != magicNumberCode) {
+
+  if (!isMagicNumberCodeSameCatagry(magicNumberCodeInToken, magicNumberCode)) {
     tokenWithoutSalt =
       magicNumberCode + magicNumberCodeInToken + tokenWithoutSalt;
   }

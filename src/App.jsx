@@ -9,7 +9,11 @@ function App() {
   return (
     <div className="App">
       hello world
-      <button onClick={() => validateToken(generateToken(9999), 9999)}>
+      <button
+        onClick={() =>
+          validateToken(generateToken(111199999999), 111199999999)
+        }
+      >
         click this
       </button>
     </div>
