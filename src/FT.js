@@ -1,4 +1,5 @@
 import {
+  dynamicCodes,
   dynamicNumberWithCode,
   isMagicNumberCodeSameCatagry,
   passwordToCodeHelper,
@@ -40,11 +41,15 @@ export const generateToken = (password) => {
     timeStamp.slice(magicNumber1),
   ];
   const { code, number } = dynamicNumberWithCode();
+  const magicNumber1Extralength =
+    JSON.stringify(number + JSON.parse(splitedToken[0])).length - magicNumber1;
   const token =
     JSON.stringify(randomNumber3) +
     magicNumberCode +
     JSON.stringify(randomNumber1) +
-    JSON.parse(splitedToken[0]) +
+    code +
+    JSON.stringify(magicNumber1Extralength) +
+    JSON.stringify(JSON.parse(splitedToken[0]) + number) +
     JSON.stringify(randomNumber2) +
     splitedToken[1];
   return token;
@@ -72,23 +77,48 @@ export const validateToken = (token, password) => {
     tokenWithoutSalt =
       magicNumberCode + magicNumberCodeInToken + tokenWithoutSalt;
   }
+  const dynamicCode = tokenWithoutSalt.slice(
+    randomNumber1Length,
+    randomNumber1Length + 2
+  );
+  const magicNumber1Extralength = +tokenWithoutSalt.slice(
+    randomNumber1Length + 2,
+    randomNumber1Length + 3
+  );
+  const dynamicNumber = dynamicCodes[dynamicCode];
   const splitedToken = [
     tokenWithoutSalt.slice(0, randomNumber1Length),
     tokenWithoutSalt.slice(
-      randomNumber1Length,
-      randomNumber1Length + magicNumber1
+      randomNumber1Length + 3,
+      randomNumber1Length + 3 + magicNumber1 + magicNumber1Extralength
     ),
     tokenWithoutSalt.slice(
-      randomNumber1Length + magicNumber1,
-      randomNumber1Length + magicNumber1 + randomNumber2Length
+      randomNumber1Length + 3 + magicNumber1 + magicNumber1Extralength,
+      randomNumber1Length +
+        3 +
+        magicNumber1 +
+        magicNumber1Extralength +
+        randomNumber2Length
     ),
     tokenWithoutSalt.slice(
-      randomNumber1Length + magicNumber1 + randomNumber2Length,
-      randomNumber1Length + magicNumber1 + randomNumber2Length + magicNumber2
+      randomNumber1Length +
+        3 +
+        magicNumber1 +
+        magicNumber1Extralength +
+        randomNumber2Length,
+      randomNumber1Length +
+        3 +
+        magicNumber1 +
+        magicNumber1Extralength +
+        randomNumber2Length +
+        magicNumber2
     ),
   ];
-
-  const timeStampByToken = +(splitedToken[1] + splitedToken[3]);
+  const timeStampByToken = +(
+    JSON.parse(splitedToken[1]) -
+    dynamicNumber +
+    splitedToken[3]
+  );
   console.log(
     token,
     timeStampByToken - timeStamp,
