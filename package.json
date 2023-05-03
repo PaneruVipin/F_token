@@ -1,7 +1,9 @@
 {
   "name": "dynamic-token",
   "version": "0.0.1",
-  "main": "./dist",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "real-time token generation",
     "token rotation",
