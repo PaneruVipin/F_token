@@ -3,11 +3,10 @@ import {
   dynamicNumberWithCode,
   isMagicNumberCodeSameCatagry,
   passwordToCodeHelper,
-  randomNumberBetweenThem,
   randomNumberByLength,
 } from "./helper/random";
 
-export const generateToken = (password) => {
+export const generateToken = (password: number) => {
   if (typeof password != "number") {
     throw Error("only number allowed password");
   }
@@ -55,7 +54,25 @@ export const generateToken = (password) => {
   return token;
 };
 
-export const validateToken = (token, password) => {
+export const validateToken = (token: string, password: number) => {
+  if (typeof password != "number") {
+    throw Error("only number allowed password");
+  }
+  if (JSON.stringify(password).length < 9) {
+    throw Error("password should be 9 length");
+  }
+  if (JSON.stringify(password).length > 12) {
+    throw Error("password should be less then and equal 12 numbers");
+  }
+  if (JSON.stringify(password).includes("0")) {
+    throw Error("0 is not allowed in password for secruity reason");
+  }
+  if (typeof token != "string") {
+    throw Error("inValid dynamic Token, token must be a string");
+  }
+  if (Number.isNaN(+token)) {
+    throw Error("inValid dynamic Token");
+  }
   const timeStamp =
     JSON.parse(JSON.stringify(password).slice(4) + "99999") +
     new Date().getTime();

@@ -36,13 +36,13 @@ export function passwordToCodeHelper(password, timeStamp) {
 }
 
 export const isMagicNumberCodeSameCatagry = (code1, code2) => {
-  const catagary = (number) => {
-    if ((number) => 1 && number <= 5) {
+  function catagary(num) {
+    if (num >= 1 && num <= 5) {
       return "cat_1";
     } else {
       return "cat_2";
     }
-  };
+  }
   return catagary(+code1) == catagary(+code2);
 };
 
