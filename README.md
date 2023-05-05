@@ -23,4 +23,25 @@ const login = async( ) => {
   })                                    // and its minimum and maximum lengths must be 9 and 12 digits respectively. 
 }                                       // The code cannot contain the digit '0'
 ```
-> __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example;
+> __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example.\
+\
+VALIDATE TOKEN IN SERVER SIDE
+```
+const { validateToken } = require("dynamic-token")
+const express = require("express");
+const router = express.Router();
+
+router.get("/login", function (req, res, next) {
+  const dynamicToken = req.headers.dt
+  try{                                                // The second argument must be the secret code that matches the one used
+     validateToken(dynamicToken,"334444784884", 50 )  // to generateToken in the frontend API call  against this endpoint. 
+     // sucesss                                       // The third argument is timeout that value 50 means generateToken and 
+     res.status(200).json({ hello: "world" })         // validateToken between time difference is more then 50ms is invalid request
+  }catch (e) {                                        // Timeout minimum value is 50 and maximum value is 600 and 
+      // fail                                         // default value is 200 so it is an optional parameter
+      console.log(e)
+      res.status(400).json({ message: "not authorized" })
+  }
+});
+```
+> __Note__:  always make sure to first call 'validateToken' to validate the dynamic token.
