@@ -15,7 +15,7 @@ GENERATE TOKEN AND API CALLING IN FRONTEND
 import { generateToken } from "dynamic-token"
 import axios from "axios"
 
-cpnst login = async( ) => {
+const login = async( ) => {
   await axios.post(`${baseUrl}/login`, 
   { username: "vipin", password: "vipin" },
   { headers:{
