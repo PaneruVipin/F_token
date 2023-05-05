@@ -8,21 +8,28 @@ import {
 
 export const generateToken = (password: number) => {
   if (typeof password != "number") {
-    throw Error("only number allowed password");
+    throw new Error(
+      "dynamic-token-error: only number allowed in dynamic-token password"
+    );
   }
   if (JSON.stringify(password).length < 9) {
-    throw Error("password should be 9 length");
+    throw new Error(
+      "dynamic-token-error: password should be minimiun 9 length"
+    );
   }
   if (JSON.stringify(password).length > 12) {
-    throw Error("password should be less then and equal 12 numbers");
+    throw new Error(
+      "dynamic-token-error: password should be less then and equal 12 numbers"
+    );
   }
   if (JSON.stringify(password).includes("0")) {
-    throw Error("0 is not allowed in password for secruity reason");
+    throw new Error(
+      "dynamic-token-error: 0 is not allowed in password for secruity reason"
+    );
   }
 
   const timeStamp = JSON.stringify(
-    JSON.parse(JSON.stringify(password).slice(4) + "99999") +
-      new Date().getTime()
+    +(JSON.stringify(password).slice(4) + "99999") + new Date().getTime()
   );
   const {
     randomNumber1Length,
@@ -41,41 +48,54 @@ export const generateToken = (password: number) => {
   ];
   const { code, number } = dynamicNumberWithCode();
   const magicNumber1Extralength =
-    JSON.stringify(number + JSON.parse(splitedToken[0])).length - magicNumber1;
+    JSON.stringify(number + +splitedToken[0]).length - magicNumber1;
   const token =
     JSON.stringify(randomNumber3) +
     magicNumberCode +
     JSON.stringify(randomNumber1) +
     code +
     JSON.stringify(magicNumber1Extralength) +
-    JSON.stringify(JSON.parse(splitedToken[0]) + number) +
+    JSON.stringify(+splitedToken[0] + number) +
     JSON.stringify(randomNumber2) +
     splitedToken[1];
   return token;
 };
 
-export const validateToken = (token: string, password: number) => {
+export const validateToken = (
+  token: string,
+  password: number,
+  timeOut: number = 200
+) => {
   if (typeof password != "number") {
-    throw Error("only number allowed password");
+    throw new Error(
+      "dynamic-token-error: only number allowed in dynamic-token password"
+    );
   }
   if (JSON.stringify(password).length < 9) {
-    throw Error("password should be 9 length");
+    throw new Error(
+      "dynamic-token-error: password should be minimium 9 length"
+    );
   }
   if (JSON.stringify(password).length > 12) {
-    throw Error("password should be less then and equal 12 numbers");
+    throw new Error(
+      "dynamic-token-error: password should be less then and equal 12 numbers"
+    );
   }
   if (JSON.stringify(password).includes("0")) {
-    throw Error("0 is not allowed in password for secruity reason");
+    throw new Error(
+      "dynamic-token-error: 0 is not allowed in password for secruity reason"
+    );
   }
   if (typeof token != "string") {
-    throw Error("inValid dynamic Token, token must be a string");
+    throw new Error(
+      "dynamic-token-error: inValid dynamic Token, token must be a string"
+    );
   }
   if (Number.isNaN(+token)) {
-    throw Error("inValid dynamic Token");
+    throw new Error("dynamic-token-error: inValid dynamic Token");
   }
   const timeStamp =
-    JSON.parse(JSON.stringify(password).slice(4) + "99999") +
-    new Date().getTime();
+    +(JSON.stringify(password).slice(4) + "99999") + new Date().getTime();
   const {
     randomNumber1Length,
     randomNumber2Length,
@@ -132,14 +152,17 @@ export const validateToken = (token: string, password: number) => {
     ),
   ];
   const timeStampByToken = +(
-    JSON.parse(splitedToken[1]) -
+    +splitedToken[1] -
     dynamicNumber +
     splitedToken[3]
   );
-  console.log(
-    token,
-    timeStampByToken - timeStamp,
-    timeStampByToken - timeStamp > -10 && timeStampByToken - timeStamp < 100
-  );
+  if (
+    timeStamp - timeStampByToken > -1 &&
+    timeStamp - timeStampByToken < timeOut
+  ) {
+    return;
+  } else {
+    throw new Error("dynamic-token-error: inValid dynamic-token token");
+  }
 };
 export default { validateToken, generateToken };
