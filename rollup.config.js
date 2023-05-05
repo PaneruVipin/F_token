@@ -11,14 +11,14 @@ const plugins = [
   external(),
   resolve({ extensions }),
   babel({ extensions, babelHelpers: "bundled" }),
-    typescript(),
-    commonjs(),
+  typescript(),
+  commonjs(),
   //   terser(),
 ];
 
 export default [
   {
-    input: "src/FT.ts",
+    input: "src/dynamicToken.ts",
     output: [
       {
         file: "dist/index.js",
@@ -35,7 +35,7 @@ export default [
     external: ["react"],
   },
   {
-    input: "src/FT.ts",
+    input: "src/dynamicToken.ts",
     output: {
       file: "dist/index.d.ts",
       format: "es",
