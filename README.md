@@ -11,7 +11,7 @@ npm install dynamic-token
 
 ### Usage
 GENERATE TOKEN AND API CALLING IN FRONTEND 
-```
+```javascript
 import { generateToken } from "dynamic-token"
 import axios from "axios"
 
@@ -26,7 +26,7 @@ const login = async( ) => {
 > __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example.\
 \
 VALIDATE TOKEN IN SERVER SIDE
-```
+```javascript
 const { validateToken } = require("dynamic-token")
 const express = require("express");
 const router = express.Router();
