@@ -21,7 +21,7 @@ const login = async( ) => {
   await axios.post(`${baseUrl}/login`, 
   { username: "vipin", password: "vipin" },
   { headers:{
-     dt: generateToken("334444784884")  // Note that the secret code must only contain numbers,                                      
+     dt: generateToken(334444784884)  // Note that the secret code must only contain numbers,                                      
   })                                    // and its minimum and maximum lengths must be 9 and 12 digits respectively. 
 }                                       // The code cannot contain the digit '0'
 ```
@@ -36,7 +36,7 @@ const router = express.Router();
 router.get("/login", function (req, res, next) {
   const dynamicToken = req.headers.dt
   try{                                                // The second argument must be the secret code that matches the one used
-     validateToken(dynamicToken,"334444784884", 50 )  // to generateToken in the frontend API call  against this endpoint. 
+     validateToken(dynamicToken, 334444784884, 50 )  // to generateToken in the frontend API call  against this endpoint. 
      // sucesss                                       // The third argument is timeout that value 50 means generateToken and 
      res.status(200).json({ hello: "world" })         // validateToken between time difference is more then 50ms is invalid request
   }catch (e) {                                        // Timeout minimum value is 50 and maximum value is 600 and 
