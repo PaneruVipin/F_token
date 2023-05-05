@@ -45,3 +45,5 @@ router.get("/login", function (req, res, next) {
 });
 ```
 > __Note__:  always make sure to first call 'validateToken' to validate the dynamic token.
+
+> __Note__: I want to suggest you use different secret codes for each endpoint for security reasons, because if one secret code is accidentally exposed, the other end points are still secure..
