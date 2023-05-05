@@ -19,6 +19,7 @@
     "dist"
   ],
   "author": "PaneruVipin",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "rollup -c rollup.config.js",
