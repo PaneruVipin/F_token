@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       hello world
       <button
-        onClick={() => validateToken(generateToken(999999999999), 999999999999)}
+        onClick={() => validateToken(generateToken(999999999999), 999999999999,600)}
       >
         click this
       </button>

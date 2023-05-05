@@ -14,7 +14,7 @@ export const generateToken = (password: number) => {
   }
   if (JSON.stringify(password).length < 9) {
     throw new Error(
-      "dynamic-token-error: password should be minimiun 9 length"
+      "dynamic-token-error: password should be minimun 9 length"
     );
   }
   if (JSON.stringify(password).length > 12) {
@@ -66,6 +66,21 @@ export const validateToken = (
   password: number,
   timeOut: number = 200
 ) => {
+  if (typeof timeOut != "number") {
+    throw new Error(
+      "dynamic-token-error: only number allowed in dynamic-token timeout"
+    );
+  }
+  if (timeOut < 50) {
+    throw new Error(
+      "dynamic-token-error: dynamic-token timeout minimum value is 50"
+    );
+  }
+  if (timeOut > 600) {
+    throw new Error(
+      "dynamic-token-error: dynamic-token timeout maximum value is 600"
+    );
+  }
   if (typeof password != "number") {
     throw new Error(
       "dynamic-token-error: only number allowed in dynamic-token password"
@@ -73,7 +88,7 @@ export const validateToken = (
   }
   if (JSON.stringify(password).length < 9) {
     throw new Error(
-      "dynamic-token-error: password should be minimium 9 length"
+      "dynamic-token-error: password should be minimum 9 length"
     );
   }
   if (JSON.stringify(password).length > 12) {
