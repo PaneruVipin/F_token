@@ -9,5 +9,18 @@ To make a secure and sensitive API request with a dynamic token, you need to ens
 npm install dynamic-token
 ```
 
-
 ### Usage
+GENERATE TOKEN AND API CALLING IN FRONTEND 
+```
+import { generateToken } from "dynamic-token"
+import axios from "axios"
+
+cpnst login = async( ) => {
+  await axios.post(`${baseUrl}/login`, 
+  { username: "vipin", password: "vipin" },
+  { headers:{
+     dt: generateToken("334444784884")  // Note that the secret code must only contain numbers,                                      
+  })                                    // and its minimum and maximum lengths must be 9 and 12 digits respectively. 
+}                                       // The code cannot contain the digit '0'
+```
+> __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example;
