@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
+  "repository": "PaneruVipin/dynamic-token",
   "keywords": [
     "real-time token generation",
     "token rotation",
