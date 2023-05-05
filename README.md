@@ -10,6 +10,8 @@ npm install dynamic-token
 ```
 
 ### Usage
+> __Warning__:Use the dynamic-token validation only for sensitive requests like login, signup, verifyByOTP, changePassword, deleteAccount, deleteSensitiveData, don't use it for like, dislike, chatting and other continuous cyclic API requests.
+
 GENERATE TOKEN AND API CALLING IN FRONTEND 
 ```javascript
 import { generateToken } from "dynamic-token"
