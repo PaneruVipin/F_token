@@ -25,8 +25,8 @@ const login = async( ) => {
   })                                    // and its minimum and maximum lengths must be 9 and 12 digits respectively. 
 }                                       // The code cannot contain the digit '0'
 ```
-> __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example.\
-\
+> __Note__: To achieve better performance, consider using the generateToken function. There is no time difference between calling the API and using the generateToken function, as shown in the following example.
+
 VALIDATE TOKEN IN SERVER SIDE
 ```javascript
 const { validateToken } = require("dynamic-token")
