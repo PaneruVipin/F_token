@@ -9,22 +9,22 @@ import {
 export const generateToken = (password: number) => {
   if (typeof password != "number") {
     throw new Error(
-      "dynamic-token-error: only number allowed in dynamic-token password"
+      "dynamic-token-error: Password is not valid. Only numbers are allowed."
     );
   }
   if (JSON.stringify(password).length < 9) {
     throw new Error(
-      "dynamic-token-error: password should be minimun 9 length"
+      "dynamic-token-error: Password is not valid. Password should be at least 9 characters long."
     );
   }
   if (JSON.stringify(password).length > 12) {
     throw new Error(
-      "dynamic-token-error: password should be less then and equal 12 numbers"
+      "dynamic-token-error: Password is not valid. Password should contain no more than 12 digits."
     );
   }
   if (JSON.stringify(password).includes("0")) {
     throw new Error(
-      "dynamic-token-error: 0 is not allowed in password for secruity reason"
+      "dynamic-token-error: Password is not valid. Password cannot contain the digit 0 for security reasons."
     );
   }
 
@@ -68,7 +68,7 @@ export const validateToken = (
 ) => {
   if (typeof timeOut != "number") {
     throw new Error(
-      "dynamic-token-error: only number allowed in dynamic-token timeout"
+      "dynamic-token-error: Timeout value is not valid. Only numbers are allowed for dynamic-token timeout."
     );
   }
   if (timeOut < 50) {
@@ -87,9 +87,7 @@ export const validateToken = (
     );
   }
   if (JSON.stringify(password).length < 9) {
-    throw new Error(
-      "dynamic-token-error: password should be minimum 9 length"
-    );
+    throw new Error("dynamic-token-error: password should be minimum 9 length");
   }
   if (JSON.stringify(password).length > 12) {
     throw new Error(
@@ -177,7 +175,7 @@ export const validateToken = (
   ) {
     return;
   } else {
-    throw new Error("dynamic-token-error: inValid dynamic-token token");
+    throw new Error("dynamic-token-error: inValid dynamic-token ");
   }
 };
 export default { validateToken, generateToken };
