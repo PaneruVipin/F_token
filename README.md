@@ -19,7 +19,6 @@ import axios from "axios"
 
 const login = async( ) => {
   await axios.get(`${baseUrl}/test`, 
-  { username: "vipin", password: "vipin" },
   { headers:{
      dt: generateToken(334444784884)  // Note that the secret code must only contain numbers,                                      
   })                                    // and its minimum and maximum lengths must be 9 and 12 digits respectively. 
