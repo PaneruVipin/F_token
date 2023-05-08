@@ -18,7 +18,7 @@ import { generateToken } from "dynamic-token"
 import axios from "axios"
 
 const login = async( ) => {
-  await axios.post(`${baseUrl}/login`, 
+  await axios.get(`${baseUrl}/test`, 
   { username: "vipin", password: "vipin" },
   { headers:{
      dt: generateToken(334444784884)  // Note that the secret code must only contain numbers,                                      
@@ -33,7 +33,7 @@ const { validateToken } = require("dynamic-token")
 const express = require("express");
 const router = express.Router();
 
-router.get("/login", function (req, res, next) {
+router.get("/test", function (req, res, next) {
   const dynamicToken = req.headers.dt
   try{                                                // The second argument must be the secret code that matches the one used
      validateToken(dynamicToken, 334444784884, 50 )  // to generateToken in the frontend API call  against this endpoint. 
